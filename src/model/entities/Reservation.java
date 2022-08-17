@@ -16,10 +16,10 @@ public class Reservation {
 		
 	}
 	
-	public Reservation(Integer roomNumber, Date checkiIn, Date cehckOut) {
+	public Reservation(Integer roomNumber, Date checkiIn, Date checkOut) {
 		this.roomNumber = roomNumber;
 		this.checkIn = checkiIn;
-		this.checkOut = cehckOut;
+		this.checkOut = checkOut;
 	}
 
 	public Integer getRoomNumber() {
@@ -34,7 +34,7 @@ public class Reservation {
 		return checkIn;
 	}
 
-	public Date getCehckOut() {
+	public Date getCheckOut() {
 		return checkOut;
 	}
 	
@@ -43,9 +43,17 @@ public class Reservation {
 		return TimeUnit.DAYS.convert(diff, TimeUnit.MICROSECONDS);
 	}
 	
-	public void updateDates(Date checkIn, Date checkOut) {
+	public String updateDates(Date checkIn, Date checkOut) {
+		Date now = new Date();
+		if (checkIn.before(now) || checkOut.before(now)) {
+			return "As datas de reserva para atualização devem ser futuras 2";
+		}	
+		if( !checkOut.after(checkIn) ){
+			return  "Os dados de check-out devem ser posteriores à data de check-in 3";
+		}
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
+		return null;
 	}
 	
 	@Override
